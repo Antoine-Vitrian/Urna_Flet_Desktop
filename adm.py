@@ -31,7 +31,7 @@ def area_adm(nome: str, cpf: str):
                 ft.Stack( # parte de cima com a imagem
                     controls=[
                         ft.Image(
-                            src='./imgs/fundo_admin.png',
+                            src='./imagens/fundo_admin.png',
                             fit=ft.ImageFit.COVER,
                             width=float('inf'),
                         ),
@@ -49,13 +49,25 @@ def area_adm(nome: str, cpf: str):
                             expand=6,
                             content=ft.Column(
                                 controls=[
-                                    ft.Container(
-                                        content=ft.Text('Área do eleitor', size=60, weight=ft.FontWeight.BOLD),
+                                    ft.Container( # parte de cima da esquerda
+                                        content=ft.Stack(
+                                            expand=True,
+                                            alignment=ft.Alignment(0, 0),
+                                            controls=[
+                                                ft.Container(
+                                                    content=ft.Image(src="imagens/voltar.png"),
+                                                    on_click=lambda e: print('oi'),
+                                                    alignment=ft.alignment.top_left,
+                                                    margin=ft.Margin(15, 15, 0, 0)
+                                                ),
+                                                ft.Text('Área do eleitor', size=60, weight=ft.FontWeight.BOLD)
+                                            ],
+                                        ),
                                         height=SIZE_IMG,
                                         width=float('inf'),
                                         alignment=ft.Alignment(0, 0)
                                     ),
-                                    ft.Column(
+                                    ft.Column( # parte de baixo da esquerda
                                         alignment=ft.MainAxisAlignment.CENTER,
                                         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                                         spacing=40,
@@ -95,13 +107,18 @@ def area_adm(nome: str, cpf: str):
                                     ft.Container(
                                         content=ft.Column(
                                             controls=[
-                                                ft.Image(src='./imgs/tiririca.png', width=PROFILEPIC_SIZE, border_radius=100),
+                                                ft.Image(src='./imagens/tiririca.png', width=PROFILEPIC_SIZE, border_radius=100),
                                                 ft.Column(
                                                     controls=[
                                                         info('Administrador(a)', nome),
                                                         info('CPF', cpf)
                                                     ],
                                                     width=float('inf')
+                                                ),
+                                                ft.Container(
+                                                    content=ft.Image(src="imagens/logo.png", width=80, height=80),
+                                                    expand=True,
+                                                    alignment=ft.Alignment(-1, 1)
                                                 )
                                             ],
                                             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
