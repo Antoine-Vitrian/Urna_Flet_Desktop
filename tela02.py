@@ -21,19 +21,30 @@ def main(page: ft.Page):
                 expand=True,
             ),
             ft.Container(
+                    expand=True,
+                    content=ft.Row(
+                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                        vertical_alignment=ft.CrossAxisAlignment.START,
+                        controls=[
+                            ft.Container(
+                                padding=20,
+                                content=ft.Image(src="https://raw.githubusercontent.com/Antoine-Vitrian/Urna_Flet_Desktop/refs/heads/main/imagens/voltar.png", width=60, height=60)
+                            ),
+                            ft.Container(
+                                content=ft.Image(src="https://raw.githubusercontent.com/Antoine-Vitrian/Urna_Flet_Desktop/refs/heads/main/imagens/logo.png", width=120, height=120)
+                            ),
+                        ]
+                    )
+            ),
+            ft.Container(
                 expand=True,
-                content=ft.Row(
-                    alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-                    vertical_alignment=ft.CrossAxisAlignment.START,
-                    controls=[
-                        ft.Container(
-                            padding=20,
-                            content=ft.Image(src="imagens/voltar.png", width=60, height=60)
-                        ),
-                        ft.Container(
-                            content=ft.Image(src="imagens/logo.png", width=120, height=120)
-                        ),
-                    ]
+                alignment=ft.alignment.center,
+                padding=100,
+                content=ft.Container(
+                    width=800,
+                    height=600,
+                    bgcolor="#E0E0E0",
+                    border_radius=40
                 )
             )
         ],
