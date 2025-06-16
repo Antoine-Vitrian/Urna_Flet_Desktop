@@ -27,8 +27,8 @@ class PaginaInicial(ft.Row):
 
         bv = bemvindo(page)
         im = imagem(page)
-        self.sn=ft.TextField(hint_text="senha", password=True,width = 300,bgcolor="white", color='black', on_submit=lambda e: self.login())
-        self.us=ft.TextField(hint_text="CPF",width = 300 ,expand=True,bgcolor="white", color='black', on_submit=lambda e: self.login())
+        self.sn=ft.TextField(hint_text="senha", password=True,width = 300,bgcolor="white", color='black', on_submit=lambda e: asyncio.run(self.login()))
+        self.us=ft.TextField(hint_text="CPF",width = 300 ,expand=True,bgcolor="white", color='black', on_submit=lambda e: asyncio.run(self.login()))
         
 
         lado_direito = ft.Container(
@@ -61,7 +61,7 @@ class PaginaInicial(ft.Row):
                                 width=200,
                                 height=50,
                                 bgcolor="#3471A1",
-                                on_click=lambda e: self.login()
+                                on_click=lambda e: asyncio.run(self.login())
                                 )
                             ],
                         alignment= ft.MainAxisAlignment.CENTER,
@@ -78,7 +78,7 @@ class PaginaInicial(ft.Row):
         self.spacing = 0
 
     async def login(self):
-        asyncio.create_task(self.app.verificar_login(self.us.value, self.sn.value))
+        await self.app.verificar_login(self.us.value, self.sn.value)
 
     def reset(self):
         self.sn.value = ''

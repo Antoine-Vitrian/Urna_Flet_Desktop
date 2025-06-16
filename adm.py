@@ -1,6 +1,6 @@
 import flet as ft
 
-def area_adm(nome: str, cpf: str):
+def area_adm(nome: str, cpf: str, app):
     SIZE_IMG = 350
     PROFILEPIC_POS = 150
     PROFILEPIC_SIZE = 120
@@ -56,11 +56,11 @@ def area_adm(nome: str, cpf: str):
                                             controls=[
                                                 ft.Container(
                                                     content=ft.Image(src="imagens/voltar.png"),
-                                                    on_click=lambda e: print('oi'),
+                                                    on_click=lambda e: app.inicial(),
                                                     alignment=ft.alignment.top_left,
                                                     margin=ft.Margin(15, 15, 0, 0)
                                                 ),
-                                                ft.Text('Área do eleitor', size=60, weight=ft.FontWeight.BOLD)
+                                                ft.Text('Área do Admin', size=60, weight=ft.FontWeight.BOLD)
                                             ],
                                         ),
                                         height=SIZE_IMG,
@@ -137,12 +137,3 @@ def area_adm(nome: str, cpf: str):
     )
 
     return janela
-
-def main(page: ft.Page):
-    page.title = "Área do eleitor"
-    page.padding = 0
-
-    page.add(area_adm('Neymar da Silva Bueno', 6969696969))
-
-if __name__ == "__main__":
-    ft.app(main)

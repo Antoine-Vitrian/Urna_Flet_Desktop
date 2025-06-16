@@ -5,6 +5,7 @@ import json
 
 from tela1 import PaginaInicial
 from area_eleitor import area_eleitor
+from adm import area_adm
 
 class App(ft.Container):
     def __init__(self, page):
@@ -34,9 +35,14 @@ class App(ft.Container):
         if self.nome == None or self.cpf == None:
             self.nome = nome 
             self.cpf = cpf
-        
-        self.content = area_eleitor(self.nome, self.cpf, self)
-        
+
+        print(tipo)
+
+        if tipo == 1:
+            self.content = area_eleitor(self.nome, self.cpf, self)
+        elif tipo == 2:
+            self.content = area_adm(self.nome, self.cpf, self)
+
         self.page.update()
 
     async def verificar_login(self, cpf, senha):
@@ -56,6 +62,8 @@ class App(ft.Container):
                     tipo = resposta_json['tipo']
                     nome = resposta_json['nome']
                     cpf = resposta_json['cpf']
+
+                    print(tipo)
 
                     self.login_sucesso(nome, cpf, tipo)
                 else:
