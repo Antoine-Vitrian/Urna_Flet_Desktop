@@ -1,27 +1,5 @@
 import flet as ft
-
-class botão1 (ft.Column):
-    def __init__(self, page: ft.Page):
-        super().__init__()
-        self.botão = ft.ElevatedButton(content=ft.Text("Entrar",color=ft.Colors.WHITE,size=30),width=200,height=50, bgcolor="#3471A1")
-        self.controls=[
-            self.botão
-        ]
-
-class senha (ft.Column):
-    def __init__(self, page: ft.Page):
-        super().__init__()
-        self.senha = ft.TextField(hint_text="senha", password=True,width = 300,color="white",bgcolor="white")
-        self.controls=[
-            self.senha
-        ]
-class usuario (ft.Column):
-    def __init__(self, page: ft.Page):
-        super().__init__()
-        self.usuario = ft.TextField(hint_text="Usuario",width = 300 ,expand=True,color="white",bgcolor="white")
-        self.controls=[
-            self.usuario
-        ]
+import asyncio
 
 class imagem (ft.Container):
     def __init__(self, page: ft.Page):
@@ -43,14 +21,18 @@ class bemvindo (ft.Column):
         ]
 
 class PaginaInicial(ft.Row):
-    def __init__(self, page):
+    def __init__(self, page, app):
         super().__init__()
-        bt = botão1(page)
+        self.app = app
+
         bv = bemvindo(page)
         im = imagem(page)
-        sn=senha(page)
-        us=usuario(page)
+        self.sn=ft.TextField(hint_text="senha", password=True,width = 300,bgcolor="white", color='black', on_submit=lambda e: self.login())
+        self.us=ft.TextField(hint_text="CPF",width = 300 ,expand=True,bgcolor="white", color='black', on_submit=lambda e: self.login())
+        
+
         lado_direito = ft.Container(
+            bgcolor= "#1A3A53",
             content = ft.Stack(
                 expand=True,
                 alignment=ft.Alignment(0, 0),
@@ -65,12 +47,22 @@ class PaginaInicial(ft.Row):
                             ft.Container(
                                 content=ft.Column(
                                     controls=[
-                                        us,
-                                        sn
+                                        self.us,
+                                        self.sn
                                     ]
                                 )
                                 ),
-                            bt
+                            ft.ElevatedButton(
+                                content=ft.Text(
+                                    "Entrar",
+                                    color=ft.Colors.WHITE,
+                                    size=30
+                                ),
+                                width=200,
+                                height=50,
+                                bgcolor="#3471A1",
+                                on_click=lambda e: self.login()
+                                )
                             ],
                         alignment= ft.MainAxisAlignment.CENTER,
                         horizontal_alignment = ft.CrossAxisAlignment.CENTER,
@@ -83,12 +75,11 @@ class PaginaInicial(ft.Row):
 
         self.controls=[ im,lado_direito]
         self.expand=True
+        self.spacing = 0
 
-def main(page: ft.Page):  
-    page.padding = 0
-    page.bgcolor= "#1A3A53"
-    page.title="Urna login"
-    
-    page.add(PaginaInicial(page))
-       
-ft.app(main)
+    async def login(self):
+        asyncio.create_task(self.app.verificar_login(self.us.value, self.sn.value))
+
+    def reset(self):
+        self.sn.value = ''
+        self.us.value = ''

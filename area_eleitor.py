@@ -1,6 +1,6 @@
 import flet as ft
 
-def area_eleitor(nome: str, cpf: str):
+def area_eleitor(nome: str, cpf: str, app):
     SIZE_IMG = 350
     PROFILEPIC_POS = 150
     PROFILEPIC_SIZE = 120
@@ -56,7 +56,7 @@ def area_eleitor(nome: str, cpf: str):
                                             controls=[
                                                 ft.Container(
                                                     content=ft.Image(src="imagens/voltar.png"),
-                                                    on_click=lambda e: print('oi'),
+                                                    on_click=lambda e: app.inicial(),
                                                     alignment=ft.alignment.top_left,
                                                     margin=ft.Margin(15, 15, 0, 0)
                                                 ),
