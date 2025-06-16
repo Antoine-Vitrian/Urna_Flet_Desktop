@@ -41,10 +41,20 @@ def main(page: ft.Page):
                 alignment=ft.alignment.center,
                 padding=100,
                 content=ft.Container(
+                    alignment=ft.alignment.center,
                     width=800,
                     height=600,
                     bgcolor="#E0E0E0",
-                    border_radius=40
+                    border_radius=40,
+                    content=ft.Column(
+                        controls=[
+                            ft.Container(height=30, width=500),
+                            ft.Text("Sistema de votação", color=ft.Colors.BLACK, size=40, width=500, text_align=ft.alignment.center),
+                            ft.Container(height=30, width=500),
+                            ft.TextField(label="CPF", width=500, border_color="black", border_radius=10, bgcolor="#F0F0F0"),
+                            ft.TextField(label="N° Candidato", width=500, border_color="black", border_radius=10, bgcolor="#F0F0F0")
+                        ]
+                    )
                 )
             )
         ],
