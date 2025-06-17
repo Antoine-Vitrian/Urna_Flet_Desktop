@@ -6,6 +6,7 @@ import json
 from tela1 import PaginaInicial
 from area_eleitor import area_eleitor
 from adm import area_adm
+from tela02 import votacao
 
 class App(ft.Container):
     def __init__(self, page):
@@ -14,14 +15,38 @@ class App(ft.Container):
 
         self.pagina_inicial = PaginaInicial(page, self)
         self.area_eleitor = None
+        self.pg_votacao = votacao(self)
+
         self.expand = True
 
         self.nome = None
         self.cpf = None
+        self.tipo = None
 
         self.content = self.pagina_inicial
 
-    def inicial(self):
+    async def votar(self, voto):
+        valido = False # variável de controle
+
+        if voto.isdigit():
+            async with httpx.AsyncClient() as client:
+                response = await client.post(
+                    'http://127.0.0.1:8000/votos/votar',
+                    json={'cpf_eleitor': self.cpf, 'num_cand': voto}
+                )
+
+            if response.status_code == 200:
+                valido = True
+
+        if valido:
+            self.area_inicial()
+
+    def votacao(self):
+        self.content = self.pg_votacao
+
+        self.update()
+
+    def login(self):
         self.nome = None
         self.cpf = None
 
@@ -31,19 +56,21 @@ class App(ft.Container):
 
         self.update()
 
-    def login_sucesso(self, nome, cpf, tipo):
-        if self.nome == None or self.cpf == None:
+    def area_inicial(self, nome=None, cpf=None, tipo=None):
+        if self.nome is None and self.cpf is None and self.tipo is None:
             self.nome = nome 
             self.cpf = cpf
+            self.tipo = tipo
 
-        print(tipo)
-
-        if tipo == 1:
+        if self.tipo == 1:
             self.content = area_eleitor(self.nome, self.cpf, self)
-        elif tipo == 2:
+        elif self.tipo == 2:
             self.content = area_adm(self.nome, self.cpf, self)
+        else:
+            print('tipo inválido')
 
-        self.page.update()
+        self.update()
+
 
     async def verificar_login(self, cpf, senha):
         async with httpx.AsyncClient() as client:
@@ -65,7 +92,7 @@ class App(ft.Container):
 
                     print(tipo)
 
-                    self.login_sucesso(nome, cpf, tipo)
+                    self.area_inicial(nome, cpf, tipo)
                 else:
                     print('cpf ou senha incorreto')
             else:

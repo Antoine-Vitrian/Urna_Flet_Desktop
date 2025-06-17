@@ -56,7 +56,7 @@ def area_eleitor(nome: str, cpf: str, app):
                                             controls=[
                                                 ft.Container(
                                                     content=ft.Image(src="imagens/voltar.png"),
-                                                    on_click=lambda e: app.inicial(),
+                                                    on_click=lambda e: app.login(),
                                                     alignment=ft.alignment.top_left,
                                                     margin=ft.Margin(15, 15, 0, 0)
                                                 ),
@@ -79,7 +79,8 @@ def area_eleitor(nome: str, cpf: str, app):
                                                 color=ft.Colors.WHITE,
                                                 bgcolor="#3471A1",
                                                 width=220,
-                                                scale=1.5
+                                                scale=1.5,
+                                                on_click=lambda e: app.votacao()
                                             ),
                                             ft.ElevatedButton(
                                                 text='Visualizar candidatos',

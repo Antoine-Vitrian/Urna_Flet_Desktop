@@ -56,7 +56,7 @@ def area_adm(nome: str, cpf: str, app):
                                             controls=[
                                                 ft.Container(
                                                     content=ft.Image(src="imagens/voltar.png"),
-                                                    on_click=lambda e: app.inicial(),
+                                                    on_click=lambda e: app.login(),
                                                     alignment=ft.alignment.top_left,
                                                     margin=ft.Margin(15, 15, 0, 0)
                                                 ),
