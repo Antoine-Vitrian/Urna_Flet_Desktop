@@ -6,7 +6,7 @@ import json
 from tela1 import PaginaInicial
 from area_eleitor import area_eleitor
 from adm import area_adm
-from tela02 import votacao
+from tela02 import votacao, confirmar
 
 class App(ft.Container):
     def __init__(self, page):
@@ -15,7 +15,6 @@ class App(ft.Container):
 
         self.pagina_inicial = PaginaInicial(page, self)
         self.area_eleitor = None
-        self.pg_votacao = votacao(self)
 
         self.expand = True
 
@@ -26,26 +25,52 @@ class App(ft.Container):
         self.content = self.pagina_inicial
 
     async def votar(self, voto):
-        valido = False # variável de controle
+        # variáveis de controle
+        valido = False 
 
-        if voto.isdigit():
-            async with httpx.AsyncClient() as client:
-                response = await client.post(
-                    'http://127.0.0.1:8000/votos/votar',
-                    json={'cpf_eleitor': self.cpf, 'num_cand': voto}
-                )
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                'http://127.0.0.1:8000/votos/votar',
+                json={'cpf_eleitor': self.cpf, 'num_cand': voto}
+            )
 
-            if response.status_code == 200:
-                valido = True
+        if response.status_code == 200:
+            valido = True
 
         if valido:
+            print('voto confirmado')
+
             self.area_inicial()
 
+            self.update()
+
+    async def procurar_cand(self, num):
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f'http://127.0.0.1:8000/candidatos/{num}')
+
+            nome = None
+            partido = None
+            slogan = None
+            num = 0
+
+            if response.status_code == 200:
+                nome = response.json()['nome']
+                partido = response.json()['partido']
+                slogan = response.json()['slogan']
+                num = response.json()['numero']
+
+            self.content = confirmar(self, nome=nome, partido=partido, slogan=slogan, num=num)
+
+            self.update()
+
+    # tela de votação
     def votacao(self):
-        self.content = self.pg_votacao
+        self.content = votacao(self)
 
         self.update()
 
+
+    # tela de login
     def login(self):
         self.nome = None
         self.cpf = None
@@ -56,6 +81,7 @@ class App(ft.Container):
 
         self.update()
 
+    # area do eleitor ou do admin
     def area_inicial(self, nome=None, cpf=None, tipo=None):
         if self.nome is None and self.cpf is None and self.tipo is None:
             self.nome = nome 
@@ -71,7 +97,7 @@ class App(ft.Container):
 
         self.update()
 
-
+    # verificação do login
     async def verificar_login(self, cpf, senha):
         async with httpx.AsyncClient() as client:
             if len(cpf) > 0 and len(senha) > 0:
