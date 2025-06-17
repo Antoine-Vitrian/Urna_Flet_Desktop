@@ -108,7 +108,7 @@ def area_eleitor(nome: str, cpf: str, app):
                                     ft.Container(
                                         content=ft.Column(
                                             controls=[
-                                                ft.Image(src='imagens/tiririca.png', width=PROFILEPIC_SIZE, border_radius=100),
+                                                ft.CircleAvatar(content=ft.Image(src='imagens/profile_placeholder.png', fit=ft.ImageFit.COVER, border_radius=100, width=PROFILEPIC_SIZE, height=PROFILEPIC_SIZE)),
                                                 ft.Column(
                                                     controls=[
                                                         info('Nome do(a) eleitor(a)', nome),

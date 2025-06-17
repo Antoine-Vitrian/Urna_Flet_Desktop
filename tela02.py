@@ -81,7 +81,6 @@ def confirmar(app, nome=None, partido=None, slogan=None, img_path='caminho da im
     lbl_nome = nome
     lbl_partido = partido
     lbl_slogan = slogan
-    path = img_path
     nulo = False
 
     if lbl_nome is None or lbl_partido is None or lbl_slogan is None:

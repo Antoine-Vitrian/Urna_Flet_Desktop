@@ -88,6 +88,11 @@ class App(ft.Container):
             self.cpf = cpf
             self.tipo = tipo
 
+        if self.nome != nome or self.cpf != cpf or self.tipo != tipo:
+            self. nome = nome
+            self.cpf = cpf
+            self.tipo = tipo 
+
         if self.tipo == 1:
             self.content = area_eleitor(self.nome, self.cpf, self)
         elif self.tipo == 2:
