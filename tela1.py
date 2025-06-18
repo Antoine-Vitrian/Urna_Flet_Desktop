@@ -5,7 +5,7 @@ class imagem (ft.Container):
     def __init__(self, page: ft.Page):
         super().__init__()
         self.content = ft.Image(
-            src="image 1.png",
+            src="https://raw.githubusercontent.com/Antoine-Vitrian/Urna_Flet_Desktop/refs/heads/main/image%201.png",
             fit=ft.ImageFit.COVER,
             expand=True
         )
